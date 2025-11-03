@@ -1,3 +1,49 @@
+﻿export const melody_tune = `setcps(120/60/4)
+samples('github:algorave-dave/samples')
+note("[c4 e4 g4 c5]*4").sound("supersaw")
+.postgain(1)
+.room(0.5)
+.lpf(800)
+`;
+
+export const dance_monkey_tune = `setcps(50/60/4)  // ~50 BPM, half speed
+
+samples('github:algorave-dave/samples')
+
+stack(
+  // Main hook melody (soft, elongated notes)
+  note(pick([
+    "{g4 g4 f#4 e4 d4 b3}%4",
+    "{g4 g4 f#4 e4 d4 b3}%4",
+    "{g4 g4 f#4 e4 d4 b3}%4",
+    "{g4 g4 f#4 e4 d4 b3}%4"
+  ], "<0 1 2 3>/1"))
+    .sound("supersaw")
+    .postgain(0.5)  // softer
+    .room(0.5)
+    .lpf(1200),
+
+  // Bassline (soft)
+  note("[g2 g2 g2 g2]*4")
+    .sound("saw")
+    .postgain(0.3)  // softer
+    .hpf(80),
+
+  // Harmony / arpeggio (soft, slower)
+  note(pick([
+    "{b3 d4 g4 b4}%4",
+    "{b3 e4 g4 b4}%4"
+  ], "<0 1>/2"))
+    .sound("saw")
+    .postgain(0.4)  // softer
+    .delay("0.5")
+    .delayfeedback(0.3)
+)
+`;
+
+
+
+
 export const stranger_tune = `setcps(140/60/4)
 
 samples('github:algorave-dave/samples')
