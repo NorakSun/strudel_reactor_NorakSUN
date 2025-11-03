@@ -11,7 +11,9 @@ export default function ControlPanel({
     onHushToggle,
     onRandomPreset,
     darkMode,
-    onThemeToggle
+    onThemeToggle,
+    volume,
+    onVolumeChange
 }) {
     const tunes = [
         { name: 'stranger_tune', label: 'Stranger Tune' },
@@ -39,6 +41,19 @@ export default function ControlPanel({
             >
                 {tunes.map(t => <option key={t.name} value={t.name}>{t.label}</option>)}
             </select>
+
+            {/* Volume Slider */}
+            <label htmlFor="volumeSlider">Volume: {volume.toFixed(2)}</label>
+            <input
+                type="range"
+                id="volumeSlider"
+                className="form-range mb-3"
+                min="0"
+                max="2"
+                step="0.01"
+                value={volume}
+                onChange={(e) => onVolumeChange(parseFloat(e.target.value))}
+            />
 
             {/* HUSH/ON Radio Buttons */}
             <div className="form-check">
@@ -80,7 +95,8 @@ export default function ControlPanel({
             <button className="btn btn-outline-info mb-3" onClick={onRandomPreset}>
                 Random Preset
             </button>
-            <br/>
+            <br />
+
             {/* Theme Toggle */}
             <button className="btn btn-outline-secondary mt-2" onClick={() => onThemeToggle(!darkMode)}>
                 {darkMode ? 'Light Mode' : 'Dark Mode'}

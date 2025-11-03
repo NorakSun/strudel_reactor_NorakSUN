@@ -3,7 +3,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { StrudelMirror } from '@strudel/codemirror';
 import { evalScope } from '@strudel/core';
 import { drawPianoroll } from '@strudel/draw';
-import { initAudioOnFirstClick, webaudioOutput, registerSynthSounds, getAudioContext } from '@strudel/webaudio';
+import {
+    initAudioOnFirstClick,
+    webaudioOutput,
+    registerSynthSounds,
+    getAudioContext
+} from '@strudel/webaudio';
 import { transpiler } from '@strudel/transpiler';
 import { registerSoundfonts } from '@strudel/soundfonts';
 import console_monkey_patch from './utils/console-monkey-patch';
@@ -16,6 +21,12 @@ import D3LogViewer from "./components/D3LogViewer";
 
 let globalEditor = null;
 
+const TUNES = {
+    stranger_tune,
+    melody_tune,
+    dance_monkey_tune
+};
+
 export default function StrudelDemo() {
     const [text, setText] = useState(stranger_tune);
     const [preset, setPreset] = useState("stranger_tune");
@@ -23,21 +34,41 @@ export default function StrudelDemo() {
     const [darkMode, setDarkMode] = useState(false);
     const [activeNotes, setActiveNotes] = useState([]);
     const [logs, setLogs] = useState([]);
+    const [volume, setVolume] = useState(0.7); // default 0..2
 
     const canvasRef = useRef(null);
     const hasRun = useRef(false);
 
-    // D3 logs
-    const handleD3Data = (event) => {
-        setLogs(prev => [...prev.slice(-50), JSON.stringify(event.detail)]);
-    };
+    // --- D3 event emitter ---
+    useEffect(() => {
+        if (!window.emitD3) {
+            window.emitD3 = (data) =>
+                document.dispatchEvent(new CustomEvent("d3Data", { detail: data }));
+        }
+    }, []);
 
-    // Initialize StrudelMirror
+    // --- D3 log listener ---
+    useEffect(() => {
+        const handleD3Data = (event) => {
+            setLogs(prev => [...prev.slice(-50), JSON.stringify(event.detail)]);
+        };
+        document.addEventListener("d3Data", handleD3Data);
+        return () => document.removeEventListener("d3Data", handleD3Data);
+    }, []);
+
+    // --- HUSH stops playback ---
+    useEffect(() => {
+        if (isHushed && globalEditor) {
+            globalEditor.stop();
+            window.emitD3({ event: "hush_activated", time: new Date().toLocaleTimeString() });
+        }
+    }, [isHushed]);
+
+    // --- Initialize StrudelMirror ---
     useEffect(() => {
         if (hasRun.current) return;
         hasRun.current = true;
 
-        document.addEventListener("d3Data", handleD3Data);
         console_monkey_patch();
 
         const canvas = canvasRef.current;
@@ -50,9 +81,12 @@ export default function StrudelDemo() {
             transpiler,
             root: document.getElementById('editor'),
             drawTime,
-            onDraw: (haps, time) => {
-                drawPianoroll({ haps, time, ctx, drawTime, fold: 0 });
+            onDraw: (haps) => {
+                drawPianoroll({ haps, ctx, drawTime, fold: 0 });
                 setActiveNotes(haps.filter(h => h.velocity > 0));
+                if (haps.length) {
+                    window.emitD3({ event: "active_notes", notes: haps.map(n => n.pitch), time: getAudioContext().currentTime });
+                }
             },
             prebake: async () => {
                 initAudioOnFirstClick();
@@ -67,88 +101,84 @@ export default function StrudelDemo() {
             },
         });
 
-        globalEditor.setCode(stranger_tune);
-
-        return () => {
-            document.removeEventListener("d3Data", handleD3Data);
-        };
+        // Set initial code with volume
+        const initText = addVolumeToTune(stranger_tune, volume);
+        globalEditor.setCode(initText);
+        setText(initText);
+        window.emitD3({ event: "init", message: "Strudel initialized" });
     }, []);
 
-    // Playback
-    const handlePlay = () => {
+    // --- Helpers ---
+    const addVolumeToTune = (tune, vol) =>
+        tune.includes("const volume") ? tune.replace(/const volume = [0-9.]+/, `const volume = ${vol}`)
+            : `const volume = ${vol}\n` + tune;
+
+    const playTune = (tuneText) => {
         if (!globalEditor) return;
-        if (isHushed) {
-            globalEditor.stop();
-            console.log("HUSH active, playback ignored");
-            return;
-        }
+        initAudioOnFirstClick();
         globalEditor.stop();
-        globalEditor.setCode(text);
+        globalEditor.setCode(tuneText);
         globalEditor.evaluate();
     };
 
-    const handleStop = () => globalEditor?.stop();
-
-    const handleProc = () => {
-        if (!globalEditor) return;
-        const replaced = text.replaceAll('<p1_Radio>', isHushed ? '_' : '');
-        setText(replaced);
-        globalEditor.setCode(replaced);
+    // --- Handlers ---
+    const handlePlay = () => {
+        if (isHushed) {
+            window.emitD3({ event: "play_ignored", reason: "HUSH active" });
+            return;
+        }
+        const codeWithVol = addVolumeToTune(text, volume);
+        setText(codeWithVol);
+        playTune(codeWithVol);
+        window.emitD3({ event: "play", preset, time: new Date().toLocaleTimeString() });
     };
 
-    const handleProcPlay = () => {
-        handleProc();
-        handlePlay();
+    const handleStop = () => {
+        globalEditor?.stop();
+        window.emitD3({ event: "stop", time: new Date().toLocaleTimeString() });
     };
 
-    const handleHushToggle = (hushed) => {
-        setIsHushed(hushed);
-        if (hushed) globalEditor?.stop();
+    const handleVolumeChange = (v) => {
+        setVolume(v);
+        const codeWithVol = addVolumeToTune(text, v);
+        setText(codeWithVol);
+        playTune(codeWithVol);
+        window.emitD3({ event: "volume_change", volume: v });
     };
 
-    // Select preset from dropdown → only update editor (no auto-play)
     const handlePresetChange = (newPreset) => {
         setPreset(newPreset);
+        const selectedTune = TUNES[newPreset] || stranger_tune;
+        const tuneWithVol = addVolumeToTune(selectedTune, volume);
+        setText(tuneWithVol);
 
-        let selectedTune;
-        switch (newPreset) {
-            case "melody_tune": selectedTune = melody_tune; break;
-            case "dance_monkey_tune": selectedTune = dance_monkey_tune; break;
-            default: selectedTune = stranger_tune;
-        }
-
-        setText(selectedTune);
-        globalEditor?.setCode(selectedTune);
+        // Do NOT play automatically
+        window.emitD3({ event: "preset_changed", preset: newPreset });
     };
 
-    // Random preset → auto-play immediately
+
+
     const handleRandomPreset = () => {
-        const presets = ["stranger_tune", "melody_tune", "dance_monkey_tune"];
-        let random;
-        do {
-            random = presets[Math.floor(Math.random() * presets.length)];
-        } while (random === preset && presets.length > 1);
+        const keys = Object.keys(TUNES).filter(k => k !== preset); // avoid current
+        const rand = keys[Math.floor(Math.random() * keys.length)];
+        setPreset(rand);
 
-        setPreset(random);
+        const selectedTune = TUNES[rand];
+        const tuneWithVol = addVolumeToTune(selectedTune, volume);
+        setText(tuneWithVol);
 
-        let selectedTune;
-        switch (random) {
-            case "melody_tune": selectedTune = melody_tune; break;
-            case "dance_monkey_tune": selectedTune = dance_monkey_tune; break;
-            default: selectedTune = stranger_tune;
-        }
-
-        setText(selectedTune);
-        globalEditor?.stop();
-        globalEditor?.setCode(selectedTune);
-
+        // Auto-play only if not hushed
         if (!isHushed) {
-            globalEditor?.evaluate(); // auto-play only for random
+            playTune(tuneWithVol);
+            window.emitD3({ event: "random_play", preset: rand, time: new Date().toLocaleTimeString() });
+        } else {
+            window.emitD3({ event: "random_ignored", preset: rand, reason: "HUSH active" });
         }
     };
 
-    const handleThemeToggle = (mode) => setDarkMode(mode);
 
+
+    // --- Render ---
     return (
         <div
             className={`container-fluid p-3 ${darkMode ? 'dark-mode' : ''}`}
@@ -158,29 +188,28 @@ export default function StrudelDemo() {
                 minHeight: '100vh'
             }}
         >
-            <h2>🎶 Strudel Demo</h2>
+            <h2>Strudel Demo</h2>
 
             <main className="row">
                 <EditorPanel text={text} setText={setText} />
                 <ControlPanel
-                    onProc={handleProc}
                     onPlay={handlePlay}
-                    onProcPlay={handleProcPlay}
                     onStop={handleStop}
+                    volume={volume}
+                    onVolumeChange={handleVolumeChange}
                     preset={preset}
                     onPresetChange={handlePresetChange}
                     isHushed={isHushed}
-                    onHushToggle={handleHushToggle}
+                    onHushToggle={setIsHushed}
                     onRandomPreset={handleRandomPreset}
                     darkMode={darkMode}
-                    onThemeToggle={handleThemeToggle}
+                    onThemeToggle={setDarkMode}
                 />
             </main>
 
             <div className="row mt-3">
                 <div className="col-md-8">
                     <div id="editor" />
-                    <div id="output" />
                     <CanvasViewer canvasRef={canvasRef} activeNotes={activeNotes} />
                     <D3LogViewer logs={logs} />
                 </div>
