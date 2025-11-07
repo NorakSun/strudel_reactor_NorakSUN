@@ -37,44 +37,44 @@ stack(
 )
 `;
 
-export const stranger_tune = `
-setcps(140/60/4)
+export const soulful_tune = `
+setcps(90/60/4)  // slower tempo
 samples('github:algorave-dave/samples')
-samples('https://raw.githubusercontent.com/tidalcycles/Dirt-Samples/master/strudel.json')
-samples('https://raw.githubusercontent.com/Mittans/tidal-drum-machines/main/machines/tidal-drum-machines.json')
 
-const gain_patterns = ["2", "{0.75 2.5}*4"]
-
-const drum_structure = ["~", "x*4", "{x ~!9 x ~!5 x ~ x ~!7 x ~!3 < ~ x > ~}%16"]
-
+// Define bass, arpeggio, drums
 const basslines = [
-  "[[eb1, eb2]!16 [f2, f1]!16 [g2, g1]!16 [f2, f1]!8 [bb2, bb1]!8]/8"
+  "[[c2, eb2, g2]!8 [f2, g2]!8 [eb2, c2]!4]"
 ]
 
 const arpeggiator1 = [
-  "{d4 bb3 eb3 d3 bb2 eb2}%16"
+  "{c3 eb3 g3 c4 eb4 g4}%8"
 ]
 
-bassline:
-note(pick(basslines, 0))
-.sound("supersaw")
-.postgain(2 * volume)
-.room(0.6)
-.lpf(700)
+const drum_structure = ["~", "x ~ x ~", "{x ~ x ~!3 x ~ x ~!2}"]
 
-main_arp: 
-note(pick(arpeggiator1, 0))
-.sound("supersaw")
-.lpf(300)
-.adsr("0:0:.5:.1")
-.room(0.6)
-.lpenv(3.3)
-.postgain(1.5 * volume)
-
-drums:
+// Stack all together to play
 stack(
-  s("tech:5").postgain(6 * volume).struct(pick(drum_structure,0)),
-  s("sh").struct("[x!3 ~!2 x!10 ~]").postgain(0.5 * volume)
-    .bank("RolandTR808").speed(0.8).jux(rev).room(0.2).gain(0.6 * volume)
+  // Bass
+  note(pick(basslines, 0))
+    .sound("supersaw")      // ensure this is valid
+    .postgain(0.8 * volume)
+    .room(0.4)
+    .lpf(400),
+
+  // Arpeggio
+  note(pick(arpeggiator1, 0))
+    .sound("supersaw")
+    .lpf(600)
+    .adsr("0.2:0.5:1:0.2")
+    .room(0.5)
+    .lpenv(4.0)
+    .postgain(0.6 * volume),
+
+  // Drums
+  s("tech:1").postgain(0.8 * volume).struct(pick(drum_structure,0)),
+  s("sh").struct("[x ~ x ~]!2").postgain(0.3 * volume)
+    .bank("RolandTR808").speed(0.6).jux(rev).room(0.3).gain(0.5 * volume)
 )
 `;
+
+

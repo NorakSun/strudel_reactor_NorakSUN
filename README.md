@@ -1,70 +1,88 @@
-# Getting Started with Create React App
+# Strudel Demo
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Strudel Demo is a web-based music playground built with **Strudel**, **React**, and **WebAudio**, featuring live code editing,
+audio synthesis, and a real-time piano roll visualization. Users can play preloaded tunes, adjust volume,
+switch presets, use DJ pads, and see notes drawn live on a piano roll.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Features
+- **Live Code Editor**: Edit Strudel tunes directly in-browser.  
+- **Audio Playback**: Play tunes using WebAudio and StrudelSynth.  
+- **Volume Control**: Adjust volume dynamically.  
+- **Piano Roll Visualization**: Real-time note rendering using `@strudel/draw`.  
+- **DJ Pads**: Play independent sounds on demand.  
+- **Hush Mode**: Instantly mute all sound.  
+- **Preset Management**: Switch between `soulful_tune`, `melody_tune`, `dance_monkey_tune` or pick a random preset.  
+- **Dark Mode Support**: Toggle between light and dark themes.  
+- **Event Logging**: Tracks events (play, stop, volume changes, preset changes) via D3-style logs.
 
-### `npm start`
+---
+## Usage
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. Edit Code: Modify the tune in the live editor (EditorPanel).
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+2. Play / Stop: Use the Play or Stop buttons in ControlPanel.
 
-### `npm test`
+3. Volume: Adjust the slider to control playback volume.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+4. Presets: Switch between soulful_tune, melody_tune, dance_monkey_tune, or choose random.
 
-### `npm run build`
+5. Hush Mode: Toggle to mute all sound instantly.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+6. DJ Pads: Play additional sounds independently.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+7. Visualization: Watch active notes appear on the piano roll in CanvasViewer.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+8. Event Logs: Monitor actions in D3LogViewer.
 
-### `npm run eject`
+## Components
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+EditorPanel.js – Live code editor for modifying tunes.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+ControlPanel.js – Play, stop, volume, preset, DJ pad controls, and Hush/Dark mode toggles.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+CanvasViewer.js – Draws the piano roll for active notes.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+D3LogViewer.js – Displays a live log of events (play, stop, preset changes).
 
-## Learn More
+utils/tunes.js – Preloaded tunes (soulful_tune, melody_tune, dance_monkey_tune).
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+utils/console-monkey-patch.js – Enhances console logging for better debugging.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Utility Functions
 
-### Code Splitting
+addVolumeToTune(tune, volume) – Adds or updates the volume variable in a tune.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+ProcessText(inputText) – Replaces <p1_Radio> placeholders with the selected preset.
 
-### Analyzing the Bundle Size
+generateRainbowColors(numColors) – Generates an array of HSL rainbow colors for background animation.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+handleDJPad(soundFile, name) – Plays a single DJ pad sound.
 
-### Making a Progressive Web App
+handleStopSinglePad(id) – Stops a specific DJ pad sound by ID.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## AI Usage Guidelines 
 
-### Advanced Configuration
+DJpadFeature: 
+Input: 
+Explain the DJ Pad feature in my Strudel Demo. Include the inputs (like sound file and name), outputs (activePads state, audio playback)?
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Output:
+Provided a clear description of inputs: sound file URL, sound name, and volume.
 
-### Deployment
+Explained outputs: activePads array, Audio objects, D3 log events on play and stop.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Generated example input/output code snippets for documentation.
 
-### `npm run build` fails to minify
+Clarified behavior notes: multiple pads can play simultaneously, pads are tracked with unique IDs, manual stop works via handleStopSinglePad(id).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+## Installation & Quick Start
+
+Ensure Node.js >= 18 and npm are installed:
+
+git clone https://github.com/NorakSun/strudel_reactor_NorakSUN.git
+npm install
+npm start
