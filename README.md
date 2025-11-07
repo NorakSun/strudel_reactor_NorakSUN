@@ -78,6 +78,23 @@ Generated example input/output code snippets for documentation.
 Clarified behavior notes: multiple pads can play simultaneously, pads are tracked with unique IDs, manual stop works via handleStopSinglePad(id).
 
 
+Volume Slide:
+
+Input:
+I want to implement a volume slider in my React StrudelDemo app that changes the volume of the tune .
+Output:
+const handleVolumeChange = (v) => {
+    setVolume(v);
+    const codeWithVol = addVolumeToTune(text, v);
+    setText(codeWithVol);
+
+    if (!isHushed) {
+        playTune(codeWithVol);
+        window.emitD3({ event: "volume_change", volume: v });
+    } else {
+        window.emitD3({ event: "volume_change_ignored", volume: v, reason: "HUSH active" });
+    }
+}; 
 
 ## Installation & Quick Start
 

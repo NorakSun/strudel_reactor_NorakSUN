@@ -137,7 +137,7 @@ export default function StrudelDemo() {
         // Set initial tune and evaluate to draw piano roll immediately
         const initText = addVolumeToTune(soulful_tune, volume);
         globalEditor.setCode(initText);
-        globalEditor.evaluate(); // <- ensures notes are generated
+       
         setText(initText);
         window.emitD3({ event: "init", message: "Strudel initialized" });
     }, []);
