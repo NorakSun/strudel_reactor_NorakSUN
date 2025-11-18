@@ -1,73 +1,78 @@
-﻿import React, { useEffect, useRef } from "react";
+﻿import React, { useEffect, useRef, useMemo } from "react";
 import * as d3 from "d3";
 
 export default function EventFrequencyBarChart({ logs, width = 800, height = 300 }) {
     const svgRef = useRef();
+    const barsRef = useRef();
 
-    useEffect(() => {
-        if (!logs || logs.length === 0) return;
+    // --- Process logs ---
+    const { eventCounts, allLabels } = useMemo(() => {
+        const counts = {};
+        const labelSet = new Set();
 
-        // --- Extract event names ---
-        const eventNames = logs.map(log => {
+        logs.forEach(log => {
             try {
                 const obj = JSON.parse(log);
-                return obj.event || "unknown";
+                let label = obj.event || "unknown";
+
+                // Separate HUSH into ON/OFF
+                if (label === "HUSH") {
+                    label = obj.hush ? "HUSH ON" : "HUSH OFF";
+                }
+
+                counts[label] = (counts[label] || 0) + 1;
+                labelSet.add(label);
             } catch {
-                return "unknown";
+                counts["unknown"] = (counts["unknown"] || 0) + 1;
+                labelSet.add("unknown");
             }
         });
 
-        // --- Count frequencies ---
-        const frequencyMap = {};
-        eventNames.forEach(name => {
-            frequencyMap[name] = (frequencyMap[name] || 0) + 1;
-        });
-        const data = Object.entries(frequencyMap).map(([event, count]) => ({ event, count }));
+        return {
+            eventCounts: counts,
+            allLabels: Array.from(labelSet)
+        };
+    }, [logs]);
 
-        // --- Setup SVG ---
+    useEffect(() => {
         const svg = d3.select(svgRef.current);
         svg.selectAll("*").remove();
-        svg.style("background-color", "#000"); // black background
+        svg.style("background-color", "#000");
 
-        const margin = { top: 20, right: 20, bottom: 50, left: 50 };
+        const margin = { top: 20, right: 20, bottom: 70, left: 50 };
         const chartWidth = width - margin.left - margin.right;
         const chartHeight = height - margin.top - margin.bottom;
 
-        const chartGroup = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+        const chartGroup = svg.append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
 
         // --- X and Y scales ---
         const xScale = d3.scaleBand()
-            .domain(data.map(d => d.event))
+            .domain(allLabels)
             .range([0, chartWidth])
             .padding(0.2);
 
+        const maxCount = Math.max(...Object.values(eventCounts), 1);
+
         const yScale = d3.scaleLinear()
-            .domain([0, d3.max(data, d => d.count)])
-            .nice()
-            .range([chartHeight, 0]);
+            .domain([0, maxCount])
+            .range([chartHeight, 0])
+            .nice();
 
         // --- Draw bars ---
-        const bars = chartGroup.selectAll(".bar")
-            .data(data)
+        chartGroup.selectAll(".bar")
+            .data(allLabels)
             .join("rect")
             .attr("class", "bar")
-            .attr("x", d => xScale(d.event))
-            .attr("y", d => yScale(d.count))
+            .attr("x", d => xScale(d))
+            .attr("y", d => yScale(eventCounts[d] || 0))
             .attr("width", xScale.bandwidth())
-            .attr("height", d => chartHeight - yScale(d.count))
-            .style("fill", (d, i) => d3.interpolateRainbow(i / data.length));
-
-        // --- Animate rainbow bars ---
-        const animateRainbow = () => {
-            bars.transition()
-                .duration(2000)
-                .styleTween("fill", function(d, i) {
-                    // interpolateRainbow returns a color string, we wrap it in a function of t
-                    return t => d3.interpolateRainbow(Math.random());
-                })
-                .on("end", animateRainbow); // repeat
-        };
-        animateRainbow();
+            .attr("height", d => chartHeight - yScale(eventCounts[d] || 0))
+            .style("fill", d => {
+                if (d === "HUSH ON") return "orange";
+                if (d === "HUSH OFF") return "steelblue";
+                return "grey";
+            });
 
         // --- X axis ---
         chartGroup.append("g")
@@ -84,7 +89,7 @@ export default function EventFrequencyBarChart({ logs, width = 800, height = 300
             .selectAll("text")
             .style("fill", "#fff");
 
-        // Y-axis label
+        // --- Y-axis label ---
         chartGroup.append("text")
             .attr("x", -chartHeight / 2)
             .attr("y", -margin.left + 15)
@@ -93,7 +98,20 @@ export default function EventFrequencyBarChart({ logs, width = 800, height = 300
             .attr("fill", "#fff")
             .text("Frequency");
 
-    }, [logs, width, height]);
+        // --- Rainbow animation for non-HUSH bars ---
+        barsRef.current = chartGroup.selectAll(".bar")
+            .filter(d => d !== "HUSH ON" && d !== "HUSH OFF");
+
+        const animateRainbow = () => {
+            barsRef.current.transition()
+                .duration(2000)
+                .styleTween("fill", () => t => d3.interpolateRainbow(Math.random()))
+                .on("end", animateRainbow);
+        };
+
+        animateRainbow();
+
+    }, [eventCounts, allLabels, width, height]);
 
     return <svg ref={svgRef} width={width} height={height} />;
 }
