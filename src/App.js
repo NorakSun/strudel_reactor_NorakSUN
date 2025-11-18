@@ -21,18 +21,29 @@ export default function App() {
         isPlayingTune, isHushed, setIsHushed,
         darkMode, setDarkMode,
         activePads, setActivePads,
-        handlePlay, handleStop, handleProc, handleProcPlay,
+        handlePlay, handleStop,
+        handleProc, handleProcPlay,
         handleVolumeChange, handlePresetChange,
         handleDJPad, handleStopSinglePad, handleRandomPreset,
         setIsPlayingTune,
-        globalEditor
+        globalEditor,
+        addVolumeToTune,
+        TUNES
     } = useStrudelPlayer(false);
 
     const { saveSettings, loadSettings } = SettingsManager({
-        volume, preset, darkMode,
-        setVolume, setPreset, setDarkMode,
+        volume,
+        preset,
+        darkMode,
+        setVolume,
+        setPreset,
+        setDarkMode,
         setIsPlayingTune,
-        globalEditor, activePads, setActivePads
+        globalEditor,
+        activePads,
+        setActivePads,
+        addVolumeToTune,
+        TUNES, setText
     });
 
     // Rainbow background + HUSH effect

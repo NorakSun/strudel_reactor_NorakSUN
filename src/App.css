@@ -4,7 +4,7 @@
     height: 100%;
     width: 100%;
     transition: background-color 0.5s ease;
-    background-color: #fff; /* default */
+    background-color: #fff;
     color: #000;
 }
 
@@ -13,9 +13,8 @@
         color: #eee;
     }
 
-    /* Smooth RGB/HSL color cycling for playing state */
     .App.playing {
-        animation: rainbowBG 10s linear infinite; /* full cycle over 10s */
+        animation: rainbowBG 10s linear infinite;
     }
 
 @keyframes rainbowBG {
@@ -28,36 +27,245 @@
     }
 }
 
-/* Optional canvas and other small effects */
-.canvas {
-    width: 100%;
-    min-width: 300px;
-    height: 300px;
-    background-color: transparent; /* or remove background-color in App.css */
+/* Global button styles */
+button {
+    border: none;
+    outline: none;
+    border-radius: 8px;
+    padding: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
 }
 
-#roll {
-    flex: 1;
-    transition: all 0.3s ease-in-out;
-    background: linear-gradient(135deg, #1f1c2c, #928dab);
-    animation: pulseGlow 5s infinite alternate;
-}
-.btn:hover {
-    transform: scale(1.05);
-    transition: 0.2s;
-}
-
-.btn:active {
-    transform: scale(0.95);
-}
-
-
-@keyframes pulseGlow {
-    from {
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    button:hover {
+        transform: scale(1.05);
     }
 
-    to {
-        box-shadow: 0 0 25px rgba(255, 255, 255, 0.6);
+    button:active {
+        transform: scale(0.95);
     }
+
+/* ===========================
+   PLAYBACK BUTTONS — BRIGHT BASE COLORS
+   =========================== */
+.playback-proc {
+    background-color: #FF6B6B;
+    color: white;
+}
+
+.playback-procplay {
+    background-color: #FFD93D;
+    color: black;
+}
+
+.playback-play {
+    background-color: #7ED957;
+    color: white;
+}
+
+.playback-stop {
+    background-color: #4D9EF7;
+    color: white;
+}
+
+/* Active animation for 2s */
+.playback-proc.active {
+    background-color: #FF3B3B;
+    box-shadow: 0 0 12px #FF3B3B;
+}
+
+.playback-procplay.active {
+    background-color: #FFC400;
+    box-shadow: 0 0 12px #FFC400;
+}
+
+.playback-play.active {
+    background-color: #5CCF29;
+    box-shadow: 0 0 12px #5CCF29;
+}
+
+.playback-stop.active {
+    background-color: #1B86E8;
+    box-shadow: 0 0 12px #1B86E8;
+}
+
+/* ===========================
+   DJ PADS — BRIGHT BASE COLORS
+   =========================== */
+[class^="pad-"], [class*=" pad-"] {
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 8px;
+    padding: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
+}
+
+/* Bright Base Colors */
+.pad-Clap {
+    background-color: #FF5F5F;
+}
+
+.pad-Electronic1 {
+    background-color: #FFEA50;
+    color: black;
+}
+
+.pad-Electronic2 {
+    background-color: #57E68B;
+}
+
+.pad-HiHat {
+    background-color: #36E0E0 !important; /* bright cyan */
+    color: #000 !important; /* always black text */
+    border: 2px solid #00BABA;
+}
+
+.pad-Kick {
+    background-color: #FF70E0;
+}
+
+.pad-Melody1 {
+    background-color: #FFB030;
+}
+
+.pad-Melody2 {
+    background-color: #36E0E0;
+}
+
+.pad-Snare {
+    background-color: #B860F0;
+}
+
+.pad-808 {
+    background-color: #FF5050;
+}
+
+.pad-Bounce {
+    background-color: #FF8C33;
+}
+
+.pad-Cautious {
+    background-color: #6090E0;
+}
+
+.pad-Connection {
+    background-color: #47D3A6;
+}
+
+.pad-Crystal {
+    background-color: #D040D0;
+}
+
+.pad-Dawn {
+    background-color: #9020F0;
+}
+
+.pad-Dealers {
+    background-color: #5F1FFF;
+}
+
+.pad-HiHats2 {
+    background-color: #4780FF;
+}
+
+.pad-Midnight {
+    background-color: #40D0F0;
+}
+
+.pad-Taken {
+    background-color: #FF2DA0;
+}
+
+/* Active animation for 2s */
+.pad-Clap.active {
+    background-color: #FF2B2B;
+    box-shadow: 0 0 12px #FF2B2B;
+}
+
+.pad-Electronic1.active {
+    background-color: #FFD500;
+    box-shadow: 0 0 12px #FFD500;
+}
+
+.pad-Electronic2.active {
+    background-color: #20D470;
+    box-shadow: 0 0 12px #20D470;
+}
+
+.pad-HiHat.active {
+    background-color: #00BABA !important; /* slightly darker cyan */
+    box-shadow: 0 0 12px #00BABA;
+    color: #000 !important;
+}
+
+.pad-Kick.active {
+    background-color: #FF00CC;
+    box-shadow: 0 0 12px #FF00CC;
+}
+
+.pad-Melody1.active {
+    background-color: #FF9500;
+    box-shadow: 0 0 12px #FF9500;
+}
+
+.pad-Melody2.active {
+    background-color: #1FB7AC;
+    box-shadow: 0 0 12px #1FB7AC;
+}
+
+.pad-Snare.active {
+    background-color: #7C29DD;
+    box-shadow: 0 0 12px #7C29DD;
+}
+
+.pad-808.active {
+    background-color: #D90429;
+    box-shadow: 0 0 12px #D90429;
+}
+
+.pad-Bounce.active {
+    background-color: #E85D04;
+    box-shadow: 0 0 12px #E85D04;
+}
+
+.pad-Cautious.active {
+    background-color: #415A77;
+    box-shadow: 0 0 12px #415A77;
+}
+
+.pad-Connection.active {
+    background-color: #2B7A78;
+    box-shadow: 0 0 12px #2B7A78;
+}
+
+.pad-Crystal.active {
+    background-color: #9D0191;
+    box-shadow: 0 0 12px #9D0191;
+}
+
+.pad-Dawn.active {
+    background-color: #560BAD;
+    box-shadow: 0 0 12px #560BAD;
+}
+
+.pad-Dealers.active {
+    background-color: #9B30FF;
+    box-shadow: 0 0 12px #9B30FF;
+}
+
+.pad-HiHats2.active {
+    background-color: #1D3CFF;
+    box-shadow: 0 0 12px #1D3CFF;
+}
+
+.pad-Midnight.active {
+    background-color: #008FB3;
+    box-shadow: 0 0 12px #008FB3;
+}
+
+.pad-Taken.active {
+    background-color: #D1006F;
+    box-shadow: 0 0 12px #D1006F;
 }

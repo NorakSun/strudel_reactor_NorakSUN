@@ -5,9 +5,9 @@ import { initAudioOnFirstClick, webaudioOutput, registerSynthSounds, getAudioCon
 import { transpiler } from '@strudel/transpiler';
 import { registerSoundfonts } from '@strudel/soundfonts';
 import console_monkey_patch from '../utils/console-monkey-patch';
-import { soulful_tune, melody_tune, dance_monkey_tune } from '../utils/tunes';
+import { soulful_tune, melody_tune, dance_monkey_tune, original_beat } from '../utils/tunes';
 
-export const TUNES = { soulful_tune, melody_tune, dance_monkey_tune };
+export const TUNES = { soulful_tune, melody_tune, dance_monkey_tune, original_beat };
 
 export default function useStrudelPlayer(darkModeInitial = false) {
     const [text, setText] = useState(soulful_tune);
@@ -111,10 +111,26 @@ export default function useStrudelPlayer(darkModeInitial = false) {
     };
 
     const handleStop = () => {
+        // Stop the main tune
         globalEditor.current?.stop();
+
+        // Stop all active DJ pads
+        activePads.forEach((pad) => {
+            pad.audio.pause();
+            pad.audio.currentTime = 0;
+        });
+
+        // Clear active pads
+        setActivePads([]);
+
+        // Reset playback state
         setIsPlayingTune(false);
+
+        // Emit D3 event
         window.emitD3?.({ event: "stop", time: new Date().toLocaleTimeString() });
     };
+
+
 
     const handleProc = () => {
         if (isHushed) return;
@@ -196,6 +212,6 @@ export default function useStrudelPlayer(darkModeInitial = false) {
         handleRandomPreset,
         setIsPlayingTune,
         globalEditor,
-        addVolumeToTune
+        addVolumeToTune, TUNES
     };
 }

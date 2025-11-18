@@ -7,15 +7,16 @@ switch presets, use DJ pads, and see notes drawn live on a piano roll.
 ---
 
 ## Features
-- **Live Code Editor**: Edit Strudel tunes directly in-browser.  
+- **Live Code Editor**: Edit Strudel tunes directly in the browser.  
 - **Audio Playback**: Play tunes using WebAudio and StrudelSynth.  
 - **Volume Control**: Adjust volume dynamically.  
-- **Piano Roll Visualization**: Real-time note rendering using `@strudel/draw`.  
+- **D3 Graph Visualizationn**: Tracks event frequency (play, stop, presets, Hush, volume changes) in real-time.  
 - **DJ Pads**: Play independent sounds on demand.  
 - **Hush Mode**: Instantly mute all sound.  
 - **Preset Management**: Switch between `soulful_tune`, `melody_tune`, `dance_monkey_tune` or pick a random preset.  
 - **Dark Mode Support**: Toggle between light and dark themes.  
 - **Event Logging**: Tracks events (play, stop, volume changes, preset changes) via D3-style logs.
+- **Save & Load Settings**:Persist user preferences (volume, preset, dark mode) locally and restore them at any time.
 
 ---
 ## Usage
@@ -32,17 +33,21 @@ switch presets, use DJ pads, and see notes drawn live on a piano roll.
 
 6. DJ Pads: Play additional sounds independently.
 
-7. Visualization: Watch active notes appear on the piano roll in CanvasViewer.
+7. Visualization: Monitor a live D3 bar chart showing the frequency of playback events.
 
 8. Event Logs: Monitor actions in D3LogViewer.
+
+9. Save Settings: Click Save Settings to store current volume, preset, and theme.
+
+10. Load Settings: Click Load Settings to restore previously saved preferences
 
 ## Components
 
 EditorPanel.js – Live code editor for modifying tunes.
 
-ControlPanel.js – Play, stop, volume, preset, DJ pad controls, and Hush/Dark mode toggles.
+ControlPanel.js – Handles playback, volume, presets, DJ pads, Hush/Dark mode toggles, and Save/Load Settings buttons.
 
-CanvasViewer.js – Draws the piano roll for active notes.
+EventFrequencyChart.js – Renders a live D3 bar chart of events.
 
 D3LogViewer.js – Displays a live log of events (play, stop, preset changes).
 
@@ -50,17 +55,23 @@ utils/tunes.js – Preloaded tunes (soulful_tune, melody_tune, dance_monkey_tune).
 
 utils/console-monkey-patch.js – Enhances console logging for better debugging.
 
+SettingsManager.js – Saves and loads user settings (volume, preset, dark mode) to/from local storage.
+
 ## Utility Functions
 
-addVolumeToTune(tune, volume) – Adds or updates the volume variable in a tune.
+1. addVolumeToTune(tune, volume) – Adds or updates the volume variable in a tune.
 
-ProcessText(inputText) – Replaces <p1_Radio> placeholders with the selected preset.
+2. ProcessText(inputText) – Replaces <p1_Radio> placeholders with the selected preset.
 
-generateRainbowColors(numColors) – Generates an array of HSL rainbow colors for background animation.
+3. generateRainbowColors(numColors) – Generates an array of HSL rainbow colors for background animation.
 
-handleDJPad(soundFile, name) – Plays a single DJ pad sound.
+4. handleDJPad(soundFile, name) – Plays a single DJ pad sound.
 
-handleStopSinglePad(id) – Stops a specific DJ pad sound by ID.
+5. handleStopSinglePad(id) – Stops a specific DJ pad sound by ID.
+
+6. saveSettings() – Saves current volume, preset, and theme to local storage.
+
+7. loadSettings() – Loads previously saved settings from local storage, updating the UI and playback state.
 
 ## AI Usage Guidelines 
 
@@ -95,6 +106,37 @@ const handleVolumeChange = (v) => {
         window.emitD3({ event: "volume_change_ignored", volume: v, reason: "HUSH active" });
     }
 }; 
+
+## Music
+
+For this project, I created an original beat called “Original Beat”, designed to be relaxing but with clear structure and layered textures.
+While I reused some base samples from the Strudel bakery, I heavily modified and remixed them to ensure the track is fully unique.
+
+Creative Process:
+
+1. Bassline: I composed a custom ultra-soft bassline using a triangle wave and adjusted its postgain and lpf filters to create a smooth, relaxing foundation.
+2. Melody: I added a gentle lead melody, also using a triangle wave, with carefully tuned ADSR envelopes for a soft attack and longer sustain.
+3. Chords & Arpeggios: I layered slow, airy arpeggiated chords and applied delay and delayfeedback effects to create depth and atmosphere.
+4. Drums: Minimal drum patterns were crafted from basic kick, snare, and hi-hat structures, with volume and postgain adjustments for subtlety and balance.
+5.Volume & Dynamics: Every instrument’s volume is dynamically scaled based on the global volume variable, allowing interactive control via the React interface.
+
+Technical Process:
+
+1. Used Strudel.cc functions such as stack, note, pick, .sound(), .postgain(), .adsr(), .delay(), .room(), and .struct() to structure and manipulate the instruments.
+2.Integrated React controls for volume, presets, and DJ pads to allow real-time playback adjustments.
+3. Applied layering, envelope shaping, and filter adjustments to give the track depth and clarity.
+
+Interactivity & Originality: 
+
+1. The track responds to user input via volume sliders, preset selection, and HUSH mode, ensuring it is a living, interactive piece rather than a static copied beat.
+2. Every melodic line, chord stack, and drum pattern has been custom adjusted, guaranteeing the track is fully original and not simply a pre-made Strudel bakery sample.
+
+By carefully remixing, layering, and applying technical audio effects,this track demonstrates both creative intent and technical skill,
+qualifying it for the GIGA HD bonus points.
+
+## VideoDemo
+
+Link: https://mymailunisaedu-my.sharepoint.com/:v:/g/personal/sunby008_mymail_unisa_edu_au/IQBQlrdOLuqwSr4FU73vArctAfCLtA5kUH_cBwZiqoySf2E?e=4MXHDt
 
 ## Installation & Quick Start
 

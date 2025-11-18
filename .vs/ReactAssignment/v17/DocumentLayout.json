@@ -3,24 +3,48 @@
   "WorkspaceRootPath": "C:\\Users\\norak\\source\\repos\\strudel_reactor_NorakSUN\\strudel_reactor_NorakSUN\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\norak\\source\\repos\\strudel_reactor_noraksun\\strudel_reactor_noraksun\\readme.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:readme.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\norak\\source\\repos\\strudel_reactor_noraksun\\strudel_reactor_noraksun\\src\\utils\\tunes.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\utils\\tunes.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\norak\\source\\repos\\strudel_reactor_noraksun\\strudel_reactor_noraksun\\src\\app.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\app.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\norak\\source\\repos\\strudel_reactor_noraksun\\strudel_reactor_noraksun\\src\\app.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\app.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\norak\\source\\repos\\strudel_reactor_noraksun\\strudel_reactor_noraksun\\src\\components\\settingsmanager.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\components\\settingsmanager.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\norak\\source\\repos\\strudel_reactor_noraksun\\strudel_reactor_noraksun\\readme.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
-      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:readme.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\norak\\source\\repos\\strudel_reactor_noraksun\\strudel_reactor_noraksun\\src\\hooks\\usestrudelplayer.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\hooks\\usestrudelplayer.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\norak\\source\\repos\\strudel_reactor_noraksun\\strudel_reactor_noraksun\\src\\components\\userainbowbackground.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\components\\userainbowbackground.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\norak\\source\\repos\\strudel_reactor_noraksun\\strudel_reactor_noraksun\\src\\components\\controlpanel.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\components\\controlpanel.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\norak\\source\\repos\\strudel_reactor_noraksun\\strudel_reactor_noraksun\\src\\utils\\tunes.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\utils\\tunes.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\norak\\source\\repos\\strudel_reactor_noraksun\\strudel_reactor_noraksun\\src\\app.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\app.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\norak\\source\\repos\\strudel_reactor_noraksun\\strudel_reactor_noraksun\\src\\components\\eventfrequencychart.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\components\\eventfrequencychart.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\norak\\source\\repos\\strudel_reactor_noraksun\\strudel_reactor_noraksun\\src\\components\\editorpanel.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\components\\editorpanel.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\norak\\source\\repos\\strudel_reactor_noraksun\\strudel_reactor_noraksun\\src\\components\\d3logviewer.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\components\\d3logviewer.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,69 +54,150 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 7,
               "Title": "App.css",
               "DocumentMoniker": "C:\\Users\\norak\\source\\repos\\strudel_reactor_NorakSUN\\strudel_reactor_NorakSUN\\src\\App.css",
               "RelativeDocumentMoniker": "src\\App.css",
               "ToolTip": "C:\\Users\\norak\\source\\repos\\strudel_reactor_NorakSUN\\strudel_reactor_NorakSUN\\src\\App.css",
               "RelativeToolTip": "src\\App.css",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAwwDUAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAALAAAAAAAAAAAAAmwMgAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-11-06T09:59:04.413Z",
+              "WhenOpened": "2025-11-18T09:49:17.498Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "README.md",
-              "DocumentMoniker": "C:\\Users\\norak\\source\\repos\\strudel_reactor_NorakSUN\\strudel_reactor_NorakSUN\\README.md",
-              "RelativeDocumentMoniker": "README.md",
-              "ToolTip": "C:\\Users\\norak\\source\\repos\\strudel_reactor_NorakSUN\\strudel_reactor_NorakSUN\\README.md",
-              "RelativeToolTip": "README.md",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
-              "WhenOpened": "2025-11-03T05:04:35.202Z"
+              "DocumentIndex": 3,
+              "Title": "SettingsManager.js",
+              "DocumentMoniker": "C:\\Users\\norak\\source\\repos\\strudel_reactor_NorakSUN\\strudel_reactor_NorakSUN\\src\\components\\SettingsManager.js",
+              "RelativeDocumentMoniker": "src\\components\\SettingsManager.js",
+              "ToolTip": "C:\\Users\\norak\\source\\repos\\strudel_reactor_NorakSUN\\strudel_reactor_NorakSUN\\src\\components\\SettingsManager.js",
+              "RelativeToolTip": "src\\components\\SettingsManager.js",
+              "ViewState": "AgIAACgAAAAAAAAAAAAswA0AAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-11-18T06:42:34.147Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "App.js",
-              "DocumentMoniker": "C:\\Users\\norak\\source\\repos\\strudel_reactor_NorakSUN\\strudel_reactor_NorakSUN\\src\\App.js",
-              "RelativeDocumentMoniker": "src\\App.js",
-              "ToolTip": "C:\\Users\\norak\\source\\repos\\strudel_reactor_NorakSUN\\strudel_reactor_NorakSUN\\src\\App.js",
-              "RelativeToolTip": "src\\App.js",
-              "ViewState": "AgIAAHsAAAAAAAAAAAAAACQAAAAuAAAAAAAAAA==",
+              "DocumentIndex": 5,
+              "Title": "useRainbowBackground.js",
+              "DocumentMoniker": "C:\\Users\\norak\\source\\repos\\strudel_reactor_NorakSUN\\strudel_reactor_NorakSUN\\src\\components\\useRainbowBackground.js",
+              "RelativeDocumentMoniker": "src\\components\\useRainbowBackground.js",
+              "ToolTip": "C:\\Users\\norak\\source\\repos\\strudel_reactor_NorakSUN\\strudel_reactor_NorakSUN\\src\\components\\useRainbowBackground.js",
+              "RelativeToolTip": "src\\components\\useRainbowBackground.js",
+              "ViewState": "AgIAABwAAAAAAAAAAIAwwC4AAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-10-28T07:27:00.682Z",
+              "WhenOpened": "2025-11-18T06:42:19.171Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
+              "Title": "useStrudelPlayer.js",
+              "DocumentMoniker": "C:\\Users\\norak\\source\\repos\\strudel_reactor_NorakSUN\\strudel_reactor_NorakSUN\\src\\hooks\\useStrudelPlayer.js",
+              "RelativeDocumentMoniker": "src\\hooks\\useStrudelPlayer.js",
+              "ToolTip": "C:\\Users\\norak\\source\\repos\\strudel_reactor_NorakSUN\\strudel_reactor_NorakSUN\\src\\hooks\\useStrudelPlayer.js",
+              "RelativeToolTip": "src\\hooks\\useStrudelPlayer.js",
+              "ViewState": "AgIAAMMAAAAAAAAAAAAwwMYAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-11-18T06:41:37.54Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "README.md",
+              "DocumentMoniker": "C:\\Users\\norak\\source\\repos\\strudel_reactor_NorakSUN\\strudel_reactor_NorakSUN\\README.md",
+              "RelativeDocumentMoniker": "README.md",
+              "ToolTip": "C:\\Users\\norak\\source\\repos\\strudel_reactor_NorakSUN\\strudel_reactor_NorakSUN\\README.md*",
+              "RelativeToolTip": "README.md*",
+              "ViewState": "AgIAAGcAAAAAAAAAAAAwwHIAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2025-11-18T06:39:05.119Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "EventFrequencyChart.js",
+              "DocumentMoniker": "C:\\Users\\norak\\source\\repos\\strudel_reactor_NorakSUN\\strudel_reactor_NorakSUN\\src\\components\\EventFrequencyChart.js",
+              "RelativeDocumentMoniker": "src\\components\\EventFrequencyChart.js",
+              "ToolTip": "C:\\Users\\norak\\source\\repos\\strudel_reactor_NorakSUN\\strudel_reactor_NorakSUN\\src\\components\\EventFrequencyChart.js",
+              "RelativeToolTip": "src\\components\\EventFrequencyChart.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGYAAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-11-18T06:36:35.262Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "EditorPanel.js",
+              "DocumentMoniker": "C:\\Users\\norak\\source\\repos\\strudel_reactor_NorakSUN\\strudel_reactor_NorakSUN\\src\\components\\EditorPanel.js",
+              "RelativeDocumentMoniker": "src\\components\\EditorPanel.js",
+              "ToolTip": "C:\\Users\\norak\\source\\repos\\strudel_reactor_NorakSUN\\strudel_reactor_NorakSUN\\src\\components\\EditorPanel.js",
+              "RelativeToolTip": "src\\components\\EditorPanel.js",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAswB0AAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-11-18T06:36:24.231Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "D3LogViewer.js",
+              "DocumentMoniker": "C:\\Users\\norak\\source\\repos\\strudel_reactor_NorakSUN\\strudel_reactor_NorakSUN\\src\\components\\D3LogViewer.js",
+              "RelativeDocumentMoniker": "src\\components\\D3LogViewer.js",
+              "ToolTip": "C:\\Users\\norak\\source\\repos\\strudel_reactor_NorakSUN\\strudel_reactor_NorakSUN\\src\\components\\D3LogViewer.js",
+              "RelativeToolTip": "src\\components\\D3LogViewer.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-11-18T06:36:14.817Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "tunes.js",
               "DocumentMoniker": "C:\\Users\\norak\\source\\repos\\strudel_reactor_NorakSUN\\strudel_reactor_NorakSUN\\src\\utils\\tunes.js",
               "RelativeDocumentMoniker": "src\\utils\\tunes.js",
               "ToolTip": "C:\\Users\\norak\\source\\repos\\strudel_reactor_NorakSUN\\strudel_reactor_NorakSUN\\src\\utils\\tunes.js",
               "RelativeToolTip": "src\\utils\\tunes.js",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAIcAAAAAAAAAAAAswFIAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-11-03T04:22:21.176Z"
+              "WhenOpened": "2025-11-18T06:19:13.704Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "ControlPanel.js",
               "DocumentMoniker": "C:\\Users\\norak\\source\\repos\\strudel_reactor_NorakSUN\\strudel_reactor_NorakSUN\\src\\components\\ControlPanel.js",
               "RelativeDocumentMoniker": "src\\components\\ControlPanel.js",
               "ToolTip": "C:\\Users\\norak\\source\\repos\\strudel_reactor_NorakSUN\\strudel_reactor_NorakSUN\\src\\components\\ControlPanel.js",
               "RelativeToolTip": "src\\components\\ControlPanel.js",
-              "ViewState": "AgIAABcAAAAAAAAAAAAQwF0AAAAgAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-10-28T07:26:52.951Z"
+              "WhenOpened": "2025-11-18T05:30:34.65Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "App.js",
+              "DocumentMoniker": "C:\\Users\\norak\\source\\repos\\strudel_reactor_NorakSUN\\strudel_reactor_NorakSUN\\src\\App.js",
+              "RelativeDocumentMoniker": "src\\App.js",
+              "ToolTip": "C:\\Users\\norak\\source\\repos\\strudel_reactor_NorakSUN\\strudel_reactor_NorakSUN\\src\\App.js",
+              "RelativeToolTip": "src\\App.js",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAQwC0AAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-11-18T05:30:33.169Z",
+              "EditorCaption": ""
             }
           ]
         }
