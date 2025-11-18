@@ -1,4 +1,5 @@
 ﻿import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect, useRef, useState } from "react";
 import { StrudelMirror } from '@strudel/codemirror';
 import { evalScope } from '@strudel/core';
@@ -66,13 +67,25 @@ export default function StrudelDemo() {
 
     // --- HUSH effect ---
     useEffect(() => {
-        if (isHushed && globalEditor) {
-            globalEditor.stop();
+        if (isHushed) {
+            // Stop StrudelMirror
+            globalEditor?.stop();
             setIsPlayingTune(false);
+
+            // Stop all active DJ pads
+            activePads.forEach(pad => {
+                pad.audio.pause();
+                pad.audio.currentTime = 0;
+            });
+            setActivePads([]); // clear all pads
+
+            // Reset background color
             if (appRef.current) appRef.current.style.backgroundColor = darkMode ? '#1e1e1e' : '#fff';
+
             window.emitD3({ event: "hush_activated", time: new Date().toLocaleTimeString() });
         }
     }, [isHushed, darkMode]);
+
 
     // --- Rainbow background effect ---
     useEffect(() => {
@@ -94,35 +107,44 @@ export default function StrudelDemo() {
     }, [isPlayingTune, isHushed, darkMode]);
 
     // --- Initialize StrudelMirror editor ---
-    useEffect(() => {
-        if (hasRun.current) return;
-        hasRun.current = true;
+   useEffect(() => {
+    if (hasRun.current) return;
+    hasRun.current = true;
 
-        console_monkey_patch();
+    console_monkey_patch();
 
-        globalEditor = new StrudelMirror({
-            defaultOutput: webaudioOutput,
-            getTime: () => getAudioContext().currentTime,
-            transpiler,
-            root: document.getElementById('editor'),
-            prebake: async () => {
-                initAudioOnFirstClick();
-                const loadModules = evalScope(
-                    import('@strudel/core'),
-                    import('@strudel/draw'),
-                    import('@strudel/mini'),
-                    import('@strudel/tonal'),
-                    import('@strudel/webaudio')
-                );
-                await Promise.all([loadModules, registerSynthSounds(), registerSoundfonts()]);
-            }
-        });
+    globalEditor = new StrudelMirror({
+        defaultOutput: webaudioOutput,
+        getTime: () => getAudioContext().currentTime,
+        transpiler,
+        root: document.getElementById('editor'),
 
-        const initText = addVolumeToTune(soulful_tune, volume);
-        globalEditor.setCode(initText);
-        setText(initText);
-        window.emitD3({ event: "init", message: "Strudel initialized" });
-    }, []);
+        // --- Editor options ---
+        theme: darkMode ? 'darcula' : 'light', // match page theme
+        lineNumbers: true,                     // show line numbers
+        tabSize: 2,                            // better indentation
+        lineWrapping: true,                    // wrap long lines (like stack(...))
+        autoCloseBrackets: true,               // optional
+        styleActiveLine: true,                 // highlight active line
+
+        prebake: async () => {
+            initAudioOnFirstClick();
+            const loadModules = evalScope(
+                import('@strudel/core'),
+                import('@strudel/draw'),
+                import('@strudel/mini'),
+                import('@strudel/tonal'),
+                import('@strudel/webaudio')
+            );
+            await Promise.all([loadModules, registerSynthSounds(), registerSoundfonts()]);
+        }
+    });
+
+    const initText = addVolumeToTune(soulful_tune, volume);
+    globalEditor.setCode(initText);
+    setText(initText);
+    window.emitD3({ event: "init", message: "Strudel initialized" });
+}, []);
 
     // --- Helpers ---
     const addVolumeToTune = (tune, vol) => {

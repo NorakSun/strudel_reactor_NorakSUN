@@ -1,4 +1,5 @@
 ﻿import React from 'react';
+import { Card, Accordion } from 'react-bootstrap'; 
 
 // Import all your sound files
 import Clap from '../sounds/Clap.wav';
@@ -46,141 +47,148 @@ export default function ControlPanel({
     ];
 
     return (
-        <div className="col-md-4">
-            {/* Playback Buttons */}
-            <button className="btn btn-outline-primary mb-1" onClick={onProc}>
-                Preprocess
-            </button>
-            <button className="btn btn-outline-primary mb-1" onClick={onProcPlay}>
-                Proc & Play
-            </button>
-            <br />
-            <button className="btn btn-outline-primary mb-3" onClick={onPlay}>
-                Play
-            </button>
-            <button className="btn btn-outline-primary mb-3" onClick={onStop}>
-                Stop
-            </button>
-            <br />
+        <div className="col-12 col-md-4">
 
-            {/* Preset Dropdown */}
-            <label htmlFor="presetSelect">Select Preset Tune:</label>
-            <select
-                id="presetSelect"
-                className="form-select mb-3"
-                value={preset}
-                onChange={(e) => onPresetChange(e.target.value)}
-            >
-                {tunes.map((t) => (
-                    <option key={t.name} value={t.name}>
-                        {t.label}
-                    </option>
-                ))}
-            </select>
+            {/* Playback Controls */}
+            <Card className="mb-3">
+                <Card.Header>Playback</Card.Header>
+                <Card.Body className="d-flex flex-wrap gap-2">
+                    <button className="btn btn-primary flex-fill" onClick={onProc}>Preprocess</button>
+                    <button className="btn btn-primary flex-fill" onClick={onProcPlay}>Proc & Play</button>
+                    <button className="btn btn-primary flex-fill" onClick={onPlay}>Play</button>
+                    <button className="btn btn-primary flex-fill" onClick={onStop}>Stop</button>
+                </Card.Body>
+            </Card>
 
-            {/* Volume Slider */}
-            <label htmlFor="volumeSlider">Volume: {volume.toFixed(2)}</label>
-            <input
-                type="range"
-                id="volumeSlider"
-                className="form-range mb-3"
-                min="0"
-                max="2"
-                step="0.01"
-                value={volume}
-                onChange={(e) => onVolumeChange(parseFloat(e.target.value))}
-            />
+            {/* Presets & Volume */}
+            <Card className="mb-3">
+                <Card.Header>Presets & Volume</Card.Header>
+                <Card.Body>
+                    <label htmlFor="presetSelect" className="form-label">Select Preset Tune:</label>
+                    <select
+                        id="presetSelect"
+                        className="form-select mb-2"
+                        value={preset}
+                        onChange={(e) => onPresetChange(e.target.value)}
+                    >
+                        {tunes.map(t => (
+                            <option key={t.name} value={t.name}>{t.label}</option>
+                        ))}
+                    </select>
 
-            {/* HUSH/ON Radio Buttons */}
-            <div className="form-check">
-                <input
-                    className="form-check-input"
-                    type="radio"
-                    name="hushToggle"
-                    id="radioOn"
-                    checked={!isHushed}
-                    onChange={() => onHushToggle(false)}
-                />
-                <label
-                    className="form-check-label"
-                    htmlFor="radioOn"
-                    style={{
-                        color: !isHushed ? 'green' : 'inherit',
-                        fontWeight: !isHushed ? 'bold' : 'normal',
-                    }}
-                >
-                    p1: ON
-                </label>
-            </div>
+                    <button className="btn btn-info w-100 mb-2" onClick={onRandomPreset}>Random Preset</button>
 
-            <div className="form-check mb-3">
-                <input
-                    className="form-check-input"
-                    type="radio"
-                    name="hushToggle"
-                    id="radioHush"
-                    checked={isHushed}
-                    onChange={() => onHushToggle(true)}
-                />
-                <label
-                    className="form-check-label"
-                    htmlFor="radioHush"
-                    style={{
-                        color: isHushed ? 'red' : 'inherit',
-                        fontWeight: isHushed ? 'bold' : 'normal',
-                    }}
-                >
-                    p1: HUSH
-                </label>
-            </div>
+                    <label htmlFor="volumeSlider" className="form-label">Volume: {volume.toFixed(2)}</label>
+                    <input
+                        type="range"
+                        id="volumeSlider"
+                        className="form-range mb-2"
+                        min="0"
+                        max="2"
+                        step="0.01"
+                        value={volume}
+                        onChange={(e) => onVolumeChange(parseFloat(e.target.value))}
+                    />
 
-            {/* Random Preset */}
-            <button className="btn btn-outline-info mb-3" onClick={onRandomPreset}>
-                Random Preset
-            </button>
-            <br />
+                    {/* Optional: Save/Load JSON buttons */}
+                    {/* <button className="btn btn-success w-100 mb-2" onClick={saveSettings}>Save Settings</button>
+                    <button className="btn btn-secondary w-100 mb-2" onClick={loadSettings}>Load Settings</button> */}
+                </Card.Body>
+            </Card>
 
-            {/* Sound Buttons */}
-            <div className="mb-3">
-                <label>Play Individual Sounds:</label>
-                <div className="d-flex flex-wrap gap-2 mt-1">
-                    {sounds.map((s) => (
-                        <button
-                            key={s.name}
-                            className="btn btn-outline-success btn-sm"
-                            onClick={() => onPlaySound(s.file, s.name)}
+            {/* HUSH Toggle */}
+            <Card className="mb-3">
+                <Card.Header>HUSH Mode</Card.Header>
+                <Card.Body>
+                    <div className="form-check">
+                        <input
+                            className="form-check-input"
+                            type="radio"
+                            name="hushToggle"
+                            id="radioOn"
+                            checked={!isHushed}
+                            onChange={() => onHushToggle(false)}
+                        />
+                        <label
+                            className="form-check-label"
+                            htmlFor="radioOn"
+                            style={{
+                                color: !isHushed ? 'green' : 'inherit',
+                                fontWeight: !isHushed ? 'bold' : 'normal',
+                            }}
                         >
-                            {s.name}
-                        </button>
-                    ))}
-                </div>
+                            ON
+                        </label>
+                    </div>
+                    <div className="form-check mb-2">
+                        <input
+                            className="form-check-input"
+                            type="radio"
+                            name="hushToggle"
+                            id="radioHush"
+                            checked={isHushed}
+                            onChange={() => onHushToggle(true)}
+                        />
+                        <label
+                            className="form-check-label"
+                            htmlFor="radioHush"
+                            style={{
+                                color: isHushed ? 'red' : 'inherit',
+                                fontWeight: isHushed ? 'bold' : 'normal',
+                            }}
+                        >
+                            HUSH
+                        </label>
+                    </div>
+                </Card.Body>
+            </Card>
 
-                {/* Active Pads with Stop button */}
-                {activePads.length > 0 && (
-                    <div className="mt-2">
-                        <label>Active Pads:</label>
-                        <div className="d-flex flex-wrap gap-2 mt-1">
-                            {activePads.map((pad) => (
+            {/* DJ Pads Accordion */}
+            <Accordion defaultActiveKey="0" className="mb-3">
+                <Accordion.Item eventKey="0">
+                    <Accordion.Header>DJ Pads</Accordion.Header>
+                    <Accordion.Body>
+                        <div className="d-flex flex-wrap gap-2 mb-2">
+                            {sounds.map(s => (
                                 <button
-                                    key={pad.id}
-                                    className="btn btn-outline-danger btn-sm"
-                                    onClick={() => onStopSinglePad(pad.id)}
+                                    key={s.name}
+                                    className="btn btn-warning btn-sm flex-fill"
+                                    onClick={() => onPlaySound(s.file, s.name)}
                                 >
-                                    Stop {pad.name}
+                                    {s.name}
                                 </button>
                             ))}
                         </div>
-                    </div>
-                )}
-            </div>
+
+                        {activePads.length > 0 && (
+                            <div>
+                                <label>Active Pads:</label>
+                                <div className="d-flex flex-wrap gap-2 mt-1">
+                                    {activePads.map(pad => (
+                                        <span
+                                            key={pad.id}
+                                            className="badge bg-danger me-1"
+                                            style={{ cursor: 'pointer' }}
+                                            onClick={() => onStopSinglePad(pad.id)}
+                                        >
+                                            {pad.name} ×
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+                    </Accordion.Body>
+                </Accordion.Item>
+            </Accordion>
 
             {/* Theme Toggle */}
             <button
-                className="btn btn-outline-secondary mt-2"
+                className="btn btn-secondary w-100"
                 onClick={() => onThemeToggle(!darkMode)}
             >
                 {darkMode ? 'Light Mode' : 'Dark Mode'}
             </button>
+
         </div>
     );
 }

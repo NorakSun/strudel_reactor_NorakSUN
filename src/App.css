@@ -42,6 +42,15 @@
     background: linear-gradient(135deg, #1f1c2c, #928dab);
     animation: pulseGlow 5s infinite alternate;
 }
+.btn:hover {
+    transform: scale(1.05);
+    transition: 0.2s;
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
 
 @keyframes pulseGlow {
     from {
