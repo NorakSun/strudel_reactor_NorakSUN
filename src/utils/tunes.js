@@ -27,7 +27,7 @@ stack(
     .hpf(80),
 
   note(pick([
-    "{b3 d4 g4 b4}%4",
+    "{b3 d4 g4 b2}%4",
     "{b3 e4 g4 b4}%4"
   ], "<0 1>/2"))
     .sound("saw")
