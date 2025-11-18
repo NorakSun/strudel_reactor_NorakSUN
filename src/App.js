@@ -15,9 +15,8 @@ import { melody_tune, soulful_tune, dance_monkey_tune } from './utils/tunes';
 
 import EditorPanel from "./components/EditorPanel";
 import ControlPanel from "./components/ControlPanel";
-import CanvasViewer from "./components/CanvasViewer";
 import D3LogViewer from "./components/D3LogViewer";
-
+import EventFrequencyChart from "./components/EventFrequencyChart";
 // Global reference to StrudelMirror editor instance
 let globalEditor = null;
 
@@ -26,30 +25,28 @@ const TUNES = { soulful_tune, melody_tune, dance_monkey_tune };
 
 export default function StrudelDemo() {
     // --- React state ---
-    const [text, setText] = useState(soulful_tune); // current code in editor
-    const [preset, setPreset] = useState("soulful_tune"); // current selected preset
-    const [isHushed, setIsHushed] = useState(false); // hush mode (disable sound)
-    const [darkMode, setDarkMode] = useState(false); // dark theme toggle
-    const [activeNotes, setActiveNotes] = useState([]); // notes to render on piano roll
-    const [logs, setLogs] = useState([]); // D3 event logs
-    const [volume, setVolume] = useState(0.7); // global volume
+    const [text, setText] = useState(soulful_tune);
+    const [preset, setPreset] = useState("soulful_tune");
+    const [isHushed, setIsHushed] = useState(false);
+    const [darkMode, setDarkMode] = useState(false);
+    const [logs, setLogs] = useState([]);
+    const [volume, setVolume] = useState(0.7);
 
     // --- Refs ---
-    const canvasRef = useRef(null); // ref to piano roll canvas
-    const hasRun = useRef(false); // ensure StrudelMirror initializes once
-    const [activePads, setActivePads] = useState([]); // DJ pads currently playing
-    const [isPlayingTune, setIsPlayingTune] = useState(false); // playback state
-    const appRef = useRef(null); // main container ref (for rainbow effect)
-    const rainbowInterval = useRef(null); // interval for rainbow background
+    const hasRun = useRef(false);
+    const [activePads, setActivePads] = useState([]);
+    const [isPlayingTune, setIsPlayingTune] = useState(false);
+    const appRef = useRef(null);
+    const rainbowInterval = useRef(null);
 
-    // --- D3 emitter: global event for logging ---
+    // --- D3 emitter ---
     useEffect(() => {
         if (!window.emitD3) {
             window.emitD3 = (data) => document.dispatchEvent(new CustomEvent("d3Data", { detail: data }));
         }
     }, []);
 
-    // --- D3 log listener: store last 50 logs ---
+    // --- D3 log listener ---
     useEffect(() => {
         const handleD3Data = (event) => {
             try {
@@ -67,7 +64,7 @@ export default function StrudelDemo() {
         return () => document.removeEventListener("d3Data", handleD3Data);
     }, []);
 
-    // --- HUSH effect: stop playback & reset background ---
+    // --- HUSH effect ---
     useEffect(() => {
         if (isHushed && globalEditor) {
             globalEditor.stop();
@@ -77,9 +74,9 @@ export default function StrudelDemo() {
         }
     }, [isHushed, darkMode]);
 
-    // --- Rainbow background effect while playing ---
+    // --- Rainbow background effect ---
     useEffect(() => {
-        const colors = generateRainbowColors(100); // generate 100 rainbow colors
+        const colors = generateRainbowColors(100);
         let index = 0;
         const stepTime = 2000 / colors.length;
 
@@ -98,29 +95,16 @@ export default function StrudelDemo() {
 
     // --- Initialize StrudelMirror editor ---
     useEffect(() => {
-        if (!canvasRef.current || hasRun.current) return;
+        if (hasRun.current) return;
         hasRun.current = true;
 
-        console_monkey_patch(); // patch console for logging
+        console_monkey_patch();
 
         globalEditor = new StrudelMirror({
             defaultOutput: webaudioOutput,
             getTime: () => getAudioContext().currentTime,
             transpiler,
-            root: document.getElementById('editor'), // attach editor DOM
-            drawTime: [-2, 2], // time window for piano roll
-            canvasRef: canvasRef.current,
-            // callback when notes are generated (haps)
-            onDrawCanvas: (ctx, width, height, haps) => {
-                console.log('haps:', haps);
-                const notes = haps.map(h => ({
-                    ...h,
-                    startTime: h.time ?? 0,
-                    endTime: (h.time ?? 0) + (h.duration ?? 0.5)
-                }));
-                setActiveNotes(notes); // trigger CanvasViewer redraw
-            },
-            // preload audio and modules
+            root: document.getElementById('editor'),
             prebake: async () => {
                 initAudioOnFirstClick();
                 const loadModules = evalScope(
@@ -134,18 +118,21 @@ export default function StrudelDemo() {
             }
         });
 
-        // Set initial tune and evaluate to draw piano roll immediately
         const initText = addVolumeToTune(soulful_tune, volume);
         globalEditor.setCode(initText);
-       
         setText(initText);
         window.emitD3({ event: "init", message: "Strudel initialized" });
     }, []);
 
     // --- Helpers ---
-    const addVolumeToTune = (tune, vol) =>
-        tune.includes("const volume") ? tune.replace(/const volume = [0-9.]+/, `const volume = ${vol}`)
-            : `const volume = ${vol}\n${tune}`;
+    const addVolumeToTune = (tune, vol) => {
+  const safeVol = Math.max(0, vol); // allow >1
+  return tune.includes("const volume")
+    ? tune.replace(/const volume = [0-9.]+/, `const volume = ${safeVol}`)
+    : `const volume = ${safeVol}\n${tune}`;
+};
+
+
 
     const ProcessText = (inputText) => inputText.replace(/<p1_Radio>/g, preset);
 
@@ -155,13 +142,13 @@ export default function StrudelDemo() {
         globalEditor.stop();
         setIsPlayingTune(true);
         globalEditor.setCode(initText);
-        globalEditor.evaluate(); // <- triggers piano roll update
+        globalEditor.evaluate();
     };
 
     // --- Event handlers ---
     const handlePlay = () => {
         if (isHushed) {
-            window.emitD3({ event: "play_ignored", reason: "HUSH active" });
+            window.emitD3({ event: "play_ignored", reason: "HUSH active", time: new Date().toLocaleTimeString() });
             return;
         }
         const codeWithVol = addVolumeToTune(text, volume);
@@ -181,6 +168,7 @@ export default function StrudelDemo() {
         const processedText = ProcessText(text);
         setText(processedText);
         globalEditor.setCode(processedText);
+        window.emitD3({ event: "preprocess", preset, time: new Date().toLocaleTimeString() });
     };
 
     const handleProcPlay = () => {
@@ -188,19 +176,20 @@ export default function StrudelDemo() {
         setText(processedText);
         globalEditor.setCode(processedText);
         playTune(processedText);
+        window.emitD3({ event: "preprocess_play", preset, time: new Date().toLocaleTimeString() });
     };
 
     const handleVolumeChange = (v) => {
         setVolume(v);
         const codeWithVol = addVolumeToTune(text, v);
         setText(codeWithVol);
-
-        if (!isHushed) {
-            playTune(codeWithVol);
-            window.emitD3({ event: "volume_change", volume: v });
-        } else {
-            window.emitD3({ event: "volume_change_ignored", volume: v, reason: "HUSH active" });
-        }
+        if (!isHushed) playTune(codeWithVol);
+        window.emitD3({
+            event: isHushed ? "volume_change_ignored" : "volume_change",
+            volume: v,
+            reason: isHushed ? "HUSH active" : undefined,
+            time: new Date().toLocaleTimeString()
+        });
     };
 
     const handlePresetChange = (newPreset) => {
@@ -208,7 +197,7 @@ export default function StrudelDemo() {
         const tuneWithVol = addVolumeToTune(selectedTune, volume);
         setPreset(newPreset);
         setText(tuneWithVol);
-        window.emitD3({ event: "preset_changed", preset: newPreset });
+        window.emitD3({ event: "preset_changed", preset: newPreset, time: new Date().toLocaleTimeString() });
     };
 
     const handleRandomPreset = () => {
@@ -217,20 +206,20 @@ export default function StrudelDemo() {
         const rand = keys[Math.floor(Math.random() * keys.length)];
         const selectedTune = TUNES[rand];
         const tuneWithVol = addVolumeToTune(selectedTune, volume);
-
         setPreset(rand);
         setText(tuneWithVol);
-
         if (!isHushed) playTune(tuneWithVol);
-
-        window.emitD3(isHushed
-            ? { event: "random_ignored", preset: rand, reason: "HUSH active" }
-            : { event: "random_play", preset: rand, time: new Date().toLocaleTimeString() });
+        window.emitD3({
+            event: isHushed ? "random_ignored" : "random_play",
+            preset: rand,
+            reason: isHushed ? "HUSH active" : undefined,
+            time: new Date().toLocaleTimeString()
+        });
     };
 
     const handleDJPad = (soundFile, name) => {
         const audio = new Audio(soundFile);
-        audio.volume = volume;
+        audio.volume = Math.min(1, volume); // browser-safe
         audio.play();
         const id = Date.now();
         setActivePads(prev => [...prev, { id, name, audio }]);
@@ -247,7 +236,7 @@ export default function StrudelDemo() {
         window.emitD3({ event: "dj_pad_stop", sound: pad.name, time: new Date().toLocaleTimeString() });
     };
 
-    // --- Utility: generate rainbow colors for background ---
+
     const generateRainbowColors = (numColors) => {
         const colors = [];
         for (let i = 0; i < numColors; i++) {
@@ -289,8 +278,10 @@ export default function StrudelDemo() {
             <div className="row mt-3">
                 <div className="col-md-8">
                     <div id="editor" />
-                    {/* Piano roll canvas */}
-                    <CanvasViewer canvasRef={canvasRef} activeNotes={activeNotes} />
+                 
+                    {/* Replace piano roll with Event Frequency Bar Chart */}
+                    {<br/> }
+                    <EventFrequencyChart logs={logs} width={800} height={300} />
                     {/* D3 log viewer */}
                     <D3LogViewer logs={logs} />
                 </div>
